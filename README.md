@@ -38,7 +38,7 @@ if you get jni warning you can disable it using this command
 
 ## Screenshots
 
-![App Screenshot](docs/pictures/sceen_shot1.png)
+![App Screenshot](docs/pictures/screen_shot1.png)
 
 
 ## Authors
