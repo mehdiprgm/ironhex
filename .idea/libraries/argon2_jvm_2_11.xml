@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="argon2-jvm-2.11">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/argon2-jvm-2.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/argon2-jvm-nolibs-2.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/bcprov-jdk18on-1.76.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-io-2.19.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/Files.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/gson-2.13.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jna-5.13.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jna-5.14.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jna-platform-5.14.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/LogManager.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/Notification.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/oshi-core-6.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/SecurityX.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-api-2.0.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-simple-2.0.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/System.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/Terminal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/TextFile.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
