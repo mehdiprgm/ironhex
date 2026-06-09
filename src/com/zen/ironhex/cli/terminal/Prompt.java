@@ -25,7 +25,8 @@ public class Prompt {
                 Map.entry("cls", new ClearCommand()),
                 Map.entry("help", new HelpCommand()),
                 Map.entry("man", new ManCommand()),
-                Map.entry("add", new AddCommand())
+                Map.entry("add", new AddCommand()),
+                Map.entry("list", new ListCommand())
         );
     }
 
