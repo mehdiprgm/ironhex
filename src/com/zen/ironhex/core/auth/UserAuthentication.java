@@ -43,8 +43,8 @@ public class UserAuthentication {
                 return new Result(false, "User already exists, select another name");
             }
 
-            User newUser = new User(username, password, null, null,
-                    OS.getTimeDate(OS.SystemTimeDate.DATE)
+            User newUser = new User(username, password, null, false,
+                    null, OS.getTimeDate(OS.SystemTimeDate.DATE)
             );
 
             return service.insert(newUser);
