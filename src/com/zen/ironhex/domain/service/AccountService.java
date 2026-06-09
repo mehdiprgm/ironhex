@@ -6,6 +6,7 @@ import com.zen.ironhex.domain.entity.main.Account;
 import com.zen.ironhex.shared.Result;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class AccountService {
     private AccountEncryptionLayer encryptionLayer;
@@ -20,5 +21,9 @@ public class AccountService {
 
     public boolean exists(int userId, String name) throws SQLException {
         return encryptionLayer.exists(userId, name);
+    }
+
+    public List<Account> selectAll(int userId) throws Exception {
+        return encryptionLayer.selectAll(userId);
     }
 }

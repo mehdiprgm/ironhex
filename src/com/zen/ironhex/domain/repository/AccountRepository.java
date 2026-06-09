@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +61,31 @@ public class AccountRepository implements EntityRepository<Account> {
 
     @Override
     public List<Account> selectAll(int userId) throws SQLException {
-        return List.of();
+        String sql = "SELECT * FROM Accounts WHERE userId = ?";
+        List<Account> accounts = new ArrayList<>();
+
+        try (Connection connection = database.connect();
+             PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("userId"),
+                        rs.getString("name"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("extraInformation"),
+                        rs.getString("createDate")
+                );
+
+                account.setId(rs.getInt("id"));
+                accounts.add(account);
+            }
+        }
+
+        return accounts;
     }
 
     @Override
