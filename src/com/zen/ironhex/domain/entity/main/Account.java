@@ -19,8 +19,10 @@ public class Account extends BaseEntity {
     public Account(int userId, String name, String username, String password, String extraInformation, String createDate) {
         this.userId = userId;
         this.name = name;
+
         this.username = username;
         this.password = password;
+
         this.extraInformation = extraInformation;
         this.createDate = createDate;
     }
