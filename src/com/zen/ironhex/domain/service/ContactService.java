@@ -6,6 +6,7 @@ import com.zen.ironhex.domain.entity.main.Contact;
 import com.zen.ironhex.shared.Result;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ContactService {
     private ContactEncryptionLayer encryptionLayer;
@@ -20,5 +21,9 @@ public class ContactService {
 
     public boolean exists(int userId, String name) throws SQLException {
         return encryptionLayer.exists(userId, name);
+    }
+
+    public List<Contact> selectAll(int userId) throws Exception {
+        return encryptionLayer.selectAll(userId);
     }
 }

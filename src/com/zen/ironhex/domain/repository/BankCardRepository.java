@@ -1,6 +1,7 @@
 package com.zen.ironhex.domain.repository;
 
 import com.zen.ironhex.domain.database.Database;
+import com.zen.ironhex.domain.entity.main.Account;
 import com.zen.ironhex.domain.entity.main.Bankcard;
 import com.zen.ironhex.domain.repository.interfaces.EntityRepository;
 import com.zen.ironhex.shared.Result;
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +65,33 @@ public class BankCardRepository implements EntityRepository<Bankcard> {
 
     @Override
     public List<Bankcard> selectAll(int userId) throws SQLException {
-        return List.of();
+        String sql = "SELECT * FROM BankCards WHERE userId = ?";
+        List<Bankcard> bankCards = new ArrayList<>();
+
+        try (Connection connection = database.connect();
+             PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Bankcard bankcard = new Bankcard(
+                        rs.getInt("userId"),
+                        rs.getString("name"),
+                        rs.getString("cardNumber"),
+                        rs.getString("accountNumber"),
+                        rs.getString("cvv2"),
+                        rs.getString("expireDate"),
+                        rs.getString("password"),
+                        rs.getString("createDate")
+                );
+
+                bankcard.setId(rs.getInt("id"));
+                bankCards.add(bankcard);
+            }
+        }
+
+        return bankCards;
     }
 
     @Override

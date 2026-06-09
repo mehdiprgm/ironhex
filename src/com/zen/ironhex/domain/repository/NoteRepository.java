@@ -1,6 +1,7 @@
 package com.zen.ironhex.domain.repository;
 
 import com.zen.ironhex.domain.database.Database;
+import com.zen.ironhex.domain.entity.main.Account;
 import com.zen.ironhex.domain.entity.main.Note;
 import com.zen.ironhex.domain.repository.interfaces.EntityRepository;
 import com.zen.ironhex.shared.Result;
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class NoteRepository implements EntityRepository<Note> {
 
     @Override
     public Result insert(Note entity) throws SQLException {
-        String sql = "INSERT INTO Accounts (userId,name,content,createDate) " +
+        String sql = "INSERT INTO Notes (userId,name,content,createDate) " +
                 "VALUES (?,?,?,?)";
 
         try (Connection connection = database.connect();
@@ -57,7 +59,29 @@ public class NoteRepository implements EntityRepository<Note> {
 
     @Override
     public List<Note> selectAll(int userId) throws SQLException {
-        return List.of();
+        String sql = "SELECT * FROM Notes WHERE userId = ?";
+        List<Note> notes = new ArrayList<>();
+
+        try (Connection connection = database.connect();
+             PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Note note = new Note(
+                  rs.getInt("userId"),
+                  rs.getString("name"),
+                  rs.getString("content"),
+                  rs.getString("createDate")
+                );
+
+                note.setId(rs.getInt("id"));
+                notes.add(note);
+            }
+        }
+
+        return notes;
     }
 
     @Override

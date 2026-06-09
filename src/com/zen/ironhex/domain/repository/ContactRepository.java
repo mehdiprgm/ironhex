@@ -1,6 +1,7 @@
 package com.zen.ironhex.domain.repository;
 
 import com.zen.ironhex.domain.database.Database;
+import com.zen.ironhex.domain.entity.main.Bankcard;
 import com.zen.ironhex.domain.entity.main.Contact;
 import com.zen.ironhex.domain.repository.interfaces.EntityRepository;
 import com.zen.ironhex.shared.Result;
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +60,30 @@ public class ContactRepository implements EntityRepository<Contact> {
 
     @Override
     public List<Contact> selectAll(int userId) throws SQLException {
-        return List.of();
+        String sql = "SELECT * FROM Contacts WHERE userId = ?";
+        List<Contact> contacts = new ArrayList<>();
+
+        try (Connection connection = database.connect();
+             PreparedStatement pst = connection.prepareStatement(sql)) {
+
+            pst.setInt(1, userId);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Contact contact = new Contact(
+                  rs.getInt("userId"),
+                  rs.getString("name"),
+                  rs.getString("phoneNumber"),
+                  rs.getString("extraInformation"),
+                  rs.getString("createDate")
+                );
+
+                contact.setId(rs.getInt("id"));
+                contacts.add(contact);
+            }
+        }
+
+        return contacts;
     }
 
     @Override

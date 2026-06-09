@@ -1,5 +1,6 @@
 package com.zen.ironhex.domain.encryption;
 
+import com.zen.ironhex.domain.entity.main.Account;
 import com.zen.ironhex.domain.entity.main.Bankcard;
 import com.zen.ironhex.domain.repository.BankCardRepository;
 import com.zen.ironhex.shared.Result;
@@ -7,6 +8,7 @@ import com.zen.ironhex.shared.security.VaultProvider;
 import com.zen.lib.securityx.vault.FastVault;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static com.zen.ironhex.shared.Variables.*;
 
@@ -27,7 +29,6 @@ public class BankCardEncryptionLayer {
         FastVault vault = new VaultProvider().makeVault(password, salt);
 
         bankcard.setCardNumber(vault.encrypt(bankcard.getCardNumber()));
-
         if (bankcard.getAccountNumber() != null) {
             bankcard.setAccountNumber(vault.encrypt(bankcard.getAccountNumber()));
         }
@@ -42,5 +43,24 @@ public class BankCardEncryptionLayer {
 
     public boolean exists(int userId, String name) throws SQLException {
         return repository.exists(userId, name);
+    }
+
+    public List<Bankcard> selectAll(int userId) throws Exception {
+        FastVault vault = new VaultProvider().makeVault(password, salt);
+        List<Bankcard> bankcards = repository.selectAll(userId);
+
+        for (Bankcard bankcard : bankcards) {
+            bankcard.setCardNumber(vault.decrypt(bankcard.getCardNumber()));
+            if (bankcard.getAccountNumber() != null) {
+                bankcard.setAccountNumber(vault.decrypt(bankcard.getAccountNumber()));
+            }
+
+            bankcard.setCvv2(vault.decrypt(bankcard.getCvv2()));
+            bankcard.setExpireDate(vault.decrypt(bankcard.getExpireDate()));
+
+            bankcard.setPassword(vault.decrypt(bankcard.getPassword()));
+        }
+
+        return bankcards;
     }
 }
