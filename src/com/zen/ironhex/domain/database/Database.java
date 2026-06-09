@@ -19,6 +19,7 @@ public class Database {
                 username TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
                 salt TEXT NOT NULL,
+                isAdmin INTEGER NOT NULL,
                 lastLoginDate TEXT,
                 createDate TEXT NOT NULL
             );
