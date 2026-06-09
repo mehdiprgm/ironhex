@@ -22,8 +22,8 @@ public class UserRepository implements EntityRepository<User> {
 
     @Override
     public Result insert(User entity) throws SQLException {
-        String sql = "INSERT INTO Users (username,password,salt,createDate) " +
-                "VALUES (?,?,?,?)";
+        String sql = "INSERT INTO Users (username,password,salt,isAdmin,lastLoginDate,createDate) " +
+                "VALUES (?,?,?,?,?,?)";
 
         try (Connection connection = database.connect();
              PreparedStatement pst = connection.prepareStatement(sql)) {
@@ -31,7 +31,10 @@ public class UserRepository implements EntityRepository<User> {
             pst.setString(2, entity.getPassword());
 
             pst.setString(3, entity.getSalt());
-            pst.setString(4, entity.getCreateDate());
+            pst.setInt(4, entity.isAdmin() ? 1 : 0);
+
+            pst.setString(5, entity.getLastLoginDate());
+            pst.setString(6, entity.getCreateDate());
 
             if (pst.executeUpdate() == 0) {
                 return new Result(false, "failed to create new user");
@@ -65,6 +68,7 @@ public class UserRepository implements EntityRepository<User> {
                         rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("salt"),
+                        rs.getInt("isAdmin") != 0,
                         rs.getString("lastLoginDate"),
                         rs.getString("createDate")
                 );
