@@ -27,10 +27,10 @@ public class UserAuthentication {
                 vars.put("password", password);
                 vars.put("salt", user.getSalt());
 
-                return new Result(true, "Login was successful");
+                return new Result(true, "login was successful");
             }
 
-            return new Result(false, "Password is not correct");
+            return new Result(false, "password is not correct");
         } catch (Exception ex) {
             return new Result(false, ex.getMessage());
         }
@@ -40,7 +40,7 @@ public class UserAuthentication {
         try {
             UserService service = new UserService();
             if (service.exists(username)) {
-                return new Result(false, "User already exists, select another name");
+                return new Result(false, "user already exists, select another name");
             }
 
             User newUser = new User(username, password, null, false,
