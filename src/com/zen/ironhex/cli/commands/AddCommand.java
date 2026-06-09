@@ -11,15 +11,12 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
-import static com.zen.ironhex.shared.Variables.entitiesMaxSize;
-import static com.zen.ironhex.shared.Variables.vars;
-import static com.zen.lib.terminal.Terminal.perror;
-import static com.zen.lib.terminal.Terminal.printf;
-import static com.zen.lib.terminal.commands.CommandUtils.findArgument;
-import static com.zen.lib.terminal.commands.CommandUtils.isArgumentsSizeValid;
+import static com.zen.ironhex.shared.Variables.*;
+import static com.zen.lib.terminal.Terminal.*;
+import static com.zen.lib.terminal.commands.CommandUtils.*;
 
 public class AddCommand implements Command {
-    private void addLogin(List<String> arguments, String name, int userId) {
+    private void addAccount(List<String> arguments, String name, int userId) {
         try {
             String username = findArgument(arguments, "-u"),
                     password = findArgument(arguments, "-p"),
@@ -200,7 +197,7 @@ public class AddCommand implements Command {
                         int userId = Integer.parseInt(vars.get("user_id"));
 
                         switch (entity) {
-                            case "--account" -> addLogin(arguments, name, userId);
+                            case "--account" -> addAccount(arguments, name, userId);
                             case "--card" -> addCard(arguments, name, userId);
                             case "--contact" -> addContact(arguments, name, userId);
                             case "--note" -> addNote(arguments, name, userId);
