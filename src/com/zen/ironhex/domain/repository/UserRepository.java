@@ -56,7 +56,7 @@ public class UserRepository implements EntityRepository<User> {
 
     @Override
     public Optional<User> select(int userId, String name) throws SQLException {
-        String sql = "SELECT * FROM users WHERE username=?";
+        String sql = "SELECT * FROM Users WHERE username=?";
 
         try (Connection connection = database.connect();
              PreparedStatement pst = connection.prepareStatement(sql)) {

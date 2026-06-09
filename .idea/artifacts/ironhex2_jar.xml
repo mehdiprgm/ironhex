@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact name="ironhex2:jar">
+    <output-path>$PROJECT_DIR$/output</output-path>
+    <root id="root">
+      <element id="archive" name="ironhex2.jar">
+        <element id="module-output" name="ironhex2" />
+      </element>
+      <element id="library" level="project" name="nbvcxz-1.5.1" />
+      <element id="library" level="project" name="passay-2.0.0" />
+      <element id="library" level="project" name="argon2-jvm-2.11" />
+      <element id="library" level="project" name="commons-lang3-3.20.0" />
+      <element id="library" level="project" name="sqlite-jdbc-3.45.3.0" />
+    </root>
+  </artifact>
+</component>
