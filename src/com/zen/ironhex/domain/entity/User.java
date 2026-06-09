@@ -7,6 +7,7 @@ public class User extends BaseEntity {
     private String password;
 
     private String salt;
+    private boolean isAdmin;
 
     private String lastLoginDate;
     private String createDate;
@@ -14,10 +15,11 @@ public class User extends BaseEntity {
     public User() {
     }
 
-    public User(String username, String password, String salt, String lastLoginDate, String createDate) {
+    public User(String username, String password, String salt, boolean isAdmin, String lastLoginDate, String createDate) {
         this.username = username;
         this.password = password;
         this.salt = salt;
+        this.isAdmin = isAdmin;
         this.lastLoginDate = lastLoginDate;
         this.createDate = createDate;
     }
@@ -44,6 +46,14 @@ public class User extends BaseEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public String getLastLoginDate() {
