@@ -16,167 +16,148 @@ import static com.zen.lib.terminal.Terminal.*;
 import static com.zen.lib.terminal.commands.CommandUtils.*;
 
 public class AddCommand implements Command {
-    private void addAccount(List<String> arguments, String name, int userId) {
-        try {
-            String username = findArgument(arguments, "-u"),
-                    password = findArgument(arguments, "-p"),
-                    extraInfo = findArgument(arguments, "-x");
 
-            List<Pair<String, String>> items = List.of(
-                    Pair.of("name", name),
-                    Pair.of("username", username),
-                    Pair.of("password", password)
-            );
+    private void addAccount(List<String> arguments, String name, int userId) throws Exception {
+        String username = findArgument(arguments, "-u"),
+                password = findArgument(arguments, "-p"),
+                extraInfo = findArgument(arguments, "-x");
 
-            if (isArgumentsValuesAvailable(items)) {
-                AccountService accountService = new AccountService();
+        List<Pair<String, String>> items = List.of(
+                Pair.of("name", name),
+                Pair.of("username", username),
+                Pair.of("password", password)
+        );
 
-                if (accountService.exists(userId, name)) {
-                    printf("message: name already exists in the database\n");
-                } else {
-                    Account account = new Account(
-                            userId, name, username, password,
-                            extraInfo, OS.getTimeDate(OS.SystemTimeDate.DATE)
-                    );
+        if (isArgumentsValuesAvailable(items)) {
+            AccountService accountService = new AccountService();
 
-                    Result result = accountService.insert(account);
-                    if (!result.success()) {
-                        perror("error: %s\n", result.message());
-                    }
+            if (accountService.exists(userId, name)) {
+                printf("message: name already exists in the database\n");
+            } else {
+                Account account = new Account(
+                        userId, name, username, password,
+                        extraInfo, OS.getTimeDate(OS.SystemTimeDate.DATE)
+                );
+
+                Result result = accountService.insert(account);
+                if (!result.success()) {
+                    perror("error: %s\n", result.message());
                 }
             }
-        } catch (Exception ex) {
-            perror("error: %s\n", ex.getMessage());
         }
     }
 
-    private void addCard(List<String> arguments, String name, int userId) {
-        try {
-            String cardNumber = findArgument(arguments, "-c"),
-                    accountNumber = findArgument(arguments, "-a"),
-                    cvv2 = findArgument(arguments, "-v"),
-                    expireDate = findArgument(arguments, "-e"),
-                    password = findArgument(arguments, "-p");
+    private void addCard(List<String> arguments, String name, int userId) throws Exception {
+        String cardNumber = findArgument(arguments, "-c"),
+                accountNumber = findArgument(arguments, "-a"),
+                cvv2 = findArgument(arguments, "-v"),
+                expireDate = findArgument(arguments, "-e"),
+                password = findArgument(arguments, "-p");
 
-            List<Pair<String, String>> item = List.of(
-                    Pair.of("name", name),
-                    Pair.of("card number", cardNumber),
-                    Pair.of("cvv2", cvv2),
-                    Pair.of("expire date", expireDate),
-                    Pair.of("password", password)
-            );
+        List<Pair<String, String>> item = List.of(
+                Pair.of("name", name),
+                Pair.of("card number", cardNumber),
+                Pair.of("cvv2", cvv2),
+                Pair.of("expire date", expireDate),
+                Pair.of("password", password)
+        );
 
-            if (isArgumentsValuesAvailable(item)) {
-                BankCardService bankCardService = new BankCardService();
+        if (isArgumentsValuesAvailable(item)) {
+            BankCardService bankCardService = new BankCardService();
 
-                if (bankCardService.exists(userId, name)) {
-                    printf("message: name already exists in the database\n");
-                } else {
-                    Bankcard bankcard = new Bankcard(
-                            userId, name, cardNumber, accountNumber,
-                            cvv2, expireDate, password, OS.getTimeDate(OS.SystemTimeDate.DATE)
-                    );
+            if (bankCardService.exists(userId, name)) {
+                printf("message: name already exists in the database\n");
+            } else {
+                Bankcard bankcard = new Bankcard(
+                        userId, name, cardNumber, accountNumber,
+                        cvv2, expireDate, password, OS.getTimeDate(OS.SystemTimeDate.DATE)
+                );
 
-                    Result result = bankCardService.insert(bankcard);
-                    if (!result.success()) {
-                        perror("error: %s\n", result.message());
-                    }
+                Result result = bankCardService.insert(bankcard);
+                if (!result.success()) {
+                    perror("error: %s\n", result.message());
                 }
             }
-        } catch (Exception ex) {
-            perror("error: %s\n", ex.getMessage());
         }
     }
 
-    private void addContact(List<String> arguments, String name, int userId) {
-        try {
-            String phoneNumber = findArgument(arguments, "-p"),
-                    extraInfo = findArgument(arguments, "-x");
+    private void addContact(List<String> arguments, String name, int userId) throws Exception {
+        String phoneNumber = findArgument(arguments, "-p"),
+                extraInfo = findArgument(arguments, "-x");
 
-            List<Pair<String, String>> items = List.of(
-                    Pair.of("name", name),
-                    Pair.of("phone number", phoneNumber)
-            );
+        List<Pair<String, String>> items = List.of(
+                Pair.of("name", name),
+                Pair.of("phone number", phoneNumber)
+        );
 
-            if (isArgumentsValuesAvailable(items)) {
-                ContactService contactService = new ContactService();
+        if (isArgumentsValuesAvailable(items)) {
+            ContactService contactService = new ContactService();
 
-                if (contactService.exists(userId, name)) {
-                    printf("message: name already exists in the database\n");
-                } else {
-                    Contact contact = new Contact(
-                            userId, name, phoneNumber, extraInfo,
-                            OS.getTimeDate(OS.SystemTimeDate.DATE)
-                    );
+            if (contactService.exists(userId, name)) {
+                printf("message: name already exists in the database\n");
+            } else {
+                Contact contact = new Contact(
+                        userId, name, phoneNumber, extraInfo,
+                        OS.getTimeDate(OS.SystemTimeDate.DATE)
+                );
 
-                    Result result = contactService.insert(contact);
-                    if (!result.success()) {
-                        perror("error: %s\n", result.message());
-                    }
+                Result result = contactService.insert(contact);
+                if (!result.success()) {
+                    perror("error: %s\n", result.message());
                 }
             }
-        } catch (Exception ex) {
-            perror("error: %s\n", ex.getMessage());
         }
     }
 
-    private void addNote(List<String> arguments, String name, int userId) {
-        try {
-            String content = findArgument(arguments, "-c");
-            List<Pair<String, String>> items = List.of(
-                    Pair.of("name", name)
-            );
+    private void addNote(List<String> arguments, String name, int userId) throws Exception {
+        String content = findArgument(arguments, "-c");
+        List<Pair<String, String>> items = List.of(
+                Pair.of("name", name)
+        );
 
-            if (isArgumentsValuesAvailable(items)) {
-                NoteService noteService = new NoteService();
+        if (isArgumentsValuesAvailable(items)) {
+            NoteService noteService = new NoteService();
 
-                if (noteService.exists(userId, name)) {
-                    printf("message: name already exists in the database\n");
-                } else {
-                    Note note = new Note(
-                            userId, name, content, OS.getTimeDate(OS.SystemTimeDate.DATE)
-                    );
+            if (noteService.exists(userId, name)) {
+                printf("message: name already exists in the database\n");
+            } else {
+                Note note = new Note(
+                        userId, name, content, OS.getTimeDate(OS.SystemTimeDate.DATE)
+                );
 
-                    Result result = noteService.insert(note);
-                    if (!result.success()) {
-                        perror("error: %s\n", result.message());
-                    }
+                Result result = noteService.insert(note);
+                if (!result.success()) {
+                    perror("error: %s\n", result.message());
                 }
             }
-        } catch (Exception ex) {
-            perror("error: %s\n", ex.getMessage());
         }
     }
 
-    private void addPassword(List<String> arguments, String name, int userId) {
-        try {
-            String password = findArgument(arguments, "-p");
-            List<Pair<String, String>> items = List.of(
-                    Pair.of("name", name),
-                    Pair.of("password", password)
-            );
+    private void addPassword(List<String> arguments, String name, int userId) throws Exception {
+        String password = findArgument(arguments, "-p");
+        List<Pair<String, String>> items = List.of(
+                Pair.of("name", name),
+                Pair.of("password", password)
+        );
 
-            if (isArgumentsValuesAvailable(items)) {
-                PasswordService passwordService = new PasswordService();
+        if (isArgumentsValuesAvailable(items)) {
+            PasswordService passwordService = new PasswordService();
 
-                if (passwordService.exists(userId, name)) {
-                    printf("message: name already exists in the database\n");
-                } else {
-                    Nbvcxz nbvcxz = new Nbvcxz();
+            if (passwordService.exists(userId, name)) {
+                printf("message: name already exists in the database\n");
+            } else {
+                Nbvcxz nbvcxz = new Nbvcxz();
 
-                    Password entity = new Password(
-                            userId, name, password, String.valueOf(password.length()),
-                            nbvcxz.estimate(password).getBasicScore(), OS.getTimeDate(OS.SystemTimeDate.DATE)
-                    );
+                Password entity = new Password(
+                        userId, name, password, String.valueOf(password.length()),
+                        nbvcxz.estimate(password).getBasicScore(), OS.getTimeDate(OS.SystemTimeDate.DATE)
+                );
 
-                    Result result = passwordService.insert(entity);
-                    if (!result.success()) {
-                        perror("error: %s\n", result.message());
-                    }
+                Result result = passwordService.insert(entity);
+                if (!result.success()) {
+                    perror("error: %s\n", result.message());
                 }
             }
-        } catch (Exception ex) {
-            perror("error: %s\n", ex.getMessage());
         }
     }
 
